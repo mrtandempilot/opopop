@@ -6,8 +6,6 @@
 
 import { google } from "googleapis";
 import { config } from "../config.js";
-import { google } from "googleapis";
-import { config } from "../config.js";
 // PDFParse will be imported dynamically when needed
 
 function getOAuthClient() {
