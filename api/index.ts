@@ -1,6 +1,24 @@
 import { webhookCallback } from "grammy";
 import { createBot } from "../src/bot.js";
 
+// Polyfills for pdfjs-dist which is used by pdf-parse
+// Vercel's Node environment lacks these browser globals
+if (typeof (global as any).DOMMatrix === "undefined") {
+    (global as any).DOMMatrix = class DOMMatrix {
+        constructor() { }
+    };
+}
+if (typeof (global as any).ImageData === "undefined") {
+    (global as any).ImageData = class ImageData {
+        constructor() { }
+    };
+}
+if (typeof (global as any).Path2D === "undefined") {
+    (global as any).Path2D = class Path2D {
+        constructor() { }
+    };
+}
+
 let botInstance: any = null;
 let handleUpdate: any = null;
 

@@ -6,7 +6,9 @@
 
 import { google } from "googleapis";
 import { config } from "../config.js";
-import { PDFParse } from "pdf-parse";
+import { google } from "googleapis";
+import { config } from "../config.js";
+// PDFParse will be imported dynamically when needed
 
 // ─── Redact: sensitive fields not logged ────────────────────────────────────
 const REDACTED = ["body", "snippet", "payload", "raw", "internalDate", "data"];
@@ -149,6 +151,8 @@ export async function getAttachmentContent(messageId: string, attachmentId: stri
 
         if (mimeType === "application/pdf") {
             try {
+                // Dynamic import to avoid startup issues on Vercel
+                const { PDFParse } = await import("pdf-parse");
                 const parser = new PDFParse({ data: buffer });
                 const pdfData = await parser.getText();
                 content = pdfData.text;

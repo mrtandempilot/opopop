@@ -6,7 +6,9 @@
 
 import { google } from "googleapis";
 import { config } from "../config.js";
-import { PDFParse } from "pdf-parse";
+import { google } from "googleapis";
+import { config } from "../config.js";
+// PDFParse will be imported dynamically when needed
 
 function getOAuthClient() {
     const auth = new google.auth.OAuth2(
@@ -112,6 +114,8 @@ export async function readFileContent(fileId: string): Promise<string> {
 
             const buffer = Buffer.from(res.data as ArrayBuffer);
             try {
+                // Dynamic import to avoid startup issues on Vercel
+                const { PDFParse } = await import("pdf-parse");
                 const parser = new PDFParse({ data: buffer });
                 const pdfData = await parser.getText();
                 content = pdfData.text;
