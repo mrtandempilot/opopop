@@ -57,12 +57,14 @@ export async function saveMemory(userId: number, content: string) {
     });
     if (error) throw error;
 
-    // Also append to local memory log
-    const timestamp = new Date().toISOString();
-    const logLine = `- [${timestamp}] (user:${userId}) ${content}\n`;
-    await appendFile(MEMORY_LOG_PATH, logLine, "utf8").catch(() => {
-        // Non-fatal: log file may not exist yet
-    });
+    // Also append to local memory log if not on Vercel
+    if (!process.env.VERCEL) {
+        const timestamp = new Date().toISOString();
+        const logLine = `- [${timestamp}] (user:${userId}) ${content}\n`;
+        await appendFile(MEMORY_LOG_PATH, logLine, "utf8").catch(() => {
+            // Non-fatal: log file may not exist yet
+        });
+    }
 }
 
 /**
