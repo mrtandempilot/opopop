@@ -10,7 +10,7 @@
             "ES2022"
         ],
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": ".",
         "skipLibCheck": true
     },
     "include": [
